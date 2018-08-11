@@ -72,9 +72,10 @@ class Hero {
          @param {string} input - Direction to travel
          */
     handleInput(input) {
+            // Below code will stop the player from moving off canvas
             const maxX = this.startX + this.step * 3;
             const minX = this.startX - this.step * 3;
-            const maxY = this.startY;
+            const maxY = this.startY + this.jump * 1;
             const minY = this.startY - this.jump * 6;
             switch (input) {
                 case 'left':

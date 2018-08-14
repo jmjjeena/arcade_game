@@ -5,10 +5,13 @@ var Enemy = function() {
 
     // x property
     // y property
-
+    this.x = 0;
+    this.y = 60;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    this.step = 101;
+    this.boundary = this.step * 4;
 };
 
 // Update the enemy's position, required method for game
@@ -19,10 +22,14 @@ Enemy.prototype.update = function(dt) {
     // all computers.
 
     // If enemy is not passed the boundary
-    // Move forward
-    // Increment x by speed * dt
-    // else
-    // Reset position to start
+    if (this.x < this.step * 4) {
+        // Move forward
+        // Increment x by speed * dt
+        this.x += 200 * dt;
+    } else {
+        // Reset position to start
+        this.x = 0;
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -58,10 +65,14 @@ class Hero {
 
         }
         // Check for collision
-        // Did hero's x and y property collide with enemy?
-        // Check for victory
-        // Did hero's  x and y coords match the final tile?
-        // render() 
+    for (let enemy of allEnemies) {
+        console.log(enemy);
+
+    }
+    // Did hero's x and y property collide with enemy?
+    // Check for victory
+    // Did hero's  x and y coords match the final tile?
+    // render() 
     render() {
             // Draw hero sprite on current x and y coord position
             ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -80,11 +91,9 @@ class Hero {
             switch (input) {
                 case 'left':
                     this.x - this.step > minX ? this.x -= this.step : "";
-                    // this.x -= this.step;
                     break;
                 case 'up':
                     this.y - this.jump > minY ? this.y -= this.jump : "";
-                    // this.y -= this.jump;
                     break;
                 case 'right':
                     this.x + this.step < maxX ? this.x += this.step : "";
@@ -108,6 +117,13 @@ class Hero {
 // Place the player object in a variable called player
 // New Hero Object
 const player = new Hero();
+const bug1 = new Enemy();
+const bug2 = new Enemy();
+const bug3 = new Enemy();
+const bug4 = new Enemy();
+const allEnemies = [];
+allEnemies.push(bug1, bug2, bug3, bug4);
+console.log(allEnemies);
 
 
 

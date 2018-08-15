@@ -1,17 +1,20 @@
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(row) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
+    this.step = 101;
+    this.jump = 83;
 
     // x property
     // y property
+    this.y = 60 + 83 * row
     this.x = 0;
-    this.y = 60;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.step = 101;
-    this.boundary = this.step * 4;
+    // this.step = 101;
+    // this.boundary = this.step * 4;
+    this.speed = Math.random() * 400 + 150;
 };
 
 // Update the enemy's position, required method for game
@@ -22,10 +25,10 @@ Enemy.prototype.update = function(dt) {
     // all computers.
 
     // If enemy is not passed the boundary
-    if (this.x < this.step * 4) {
+    if (this.x < 500) {
         // Move forward
         // Increment x by speed * dt
-        this.x += 200 * dt;
+        this.x += this.speed * dt;
     } else {
         // Reset position to start
         this.x = 0;
@@ -62,17 +65,18 @@ class Hero {
     //Methods
     //  an update() for checking our Hero’s position on the board
     update() {
-
+            // Check for collision
+            for (let enemy of allEnemies) {
+                // console.log(enemy);
+                // Did hero's x and y property collide with enemy?
+                if (this.y === enemy.y) {
+                    // console.log('Same Row');
+                }
+            }
         }
-        // Check for collision
-    for (let enemy of allEnemies) {
-        console.log(enemy);
-
-    }
-    // Did hero's x and y property collide with enemy?
-    // Check for victory
-    // Did hero's  x and y coords match the final tile?
-    // render() 
+        // Check for victory
+        // Did hero's  x and y coords match the final tile?
+        // render() 
     render() {
             // Draw hero sprite on current x and y coord position
             ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -90,12 +94,14 @@ class Hero {
             const minY = this.startY - this.jump * 6;
             switch (input) {
                 case 'left':
+                    console.log("step")
                     this.x - this.step > minX ? this.x -= this.step : "";
                     break;
                 case 'up':
                     this.y - this.jump > minY ? this.y -= this.jump : "";
                     break;
                 case 'right':
+                    console.log("step")
                     this.x + this.step < maxX ? this.x += this.step : "";
                     // this.x += this.step;
                     break;
@@ -117,12 +123,11 @@ class Hero {
 // Place the player object in a variable called player
 // New Hero Object
 const player = new Hero();
-const bug1 = new Enemy();
-const bug2 = new Enemy();
-const bug3 = new Enemy();
-const bug4 = new Enemy();
+const bug1 = new Enemy(0);
+const bug2 = new Enemy(1);
+const bug3 = new Enemy(2);
 const allEnemies = [];
-allEnemies.push(bug1, bug2, bug3, bug4);
+allEnemies.push(bug1, bug2, bug3);
 console.log(allEnemies);
 
 

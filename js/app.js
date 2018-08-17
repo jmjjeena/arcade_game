@@ -4,7 +4,6 @@ var Enemy = function(row) {
     // we've provided one for you to get started
     this.step = 101;
     this.jump = 83;
-
     // x property
     // y property
     this.y = 60 + 83 * row
@@ -12,8 +11,6 @@ var Enemy = function(row) {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    // this.step = 101;
-    // this.boundary = this.step * 4;
     this.speed = Math.random() * 400 + 150;
 };
 
@@ -51,7 +48,7 @@ class Hero {
         this.jump = 83;
         // adding a start specific starting location property
         this.startX = this.step * 2;
-        this.startY = (this.jump * 5) - 20;
+        this.startY = (this.jump * 4) + 60;
         // modififed the value of the x and y property to be the values of the startX and startY
         // x coordinates
         this.x = this.startX;
@@ -59,27 +56,40 @@ class Hero {
         this.y = this.startY;
         //Sprite image
         this.sprite = 'images/char-boy.png';
+        this.victory = false;
     }
 
 
     //Methods
     //  an update() for checking our Hero’s position on the board
     update() {
-            // Check for collision
-            for (let enemy of allEnemies) {
-                // console.log(enemy);
-                // Did hero's x and y property collide with enemy?
-                if (this.y === enemy.y) {
-                    // console.log('Same Row');
-                }
+        // Check for collision
+        for (let enemy of allEnemies) {
+            // console.log(enemy);
+            // Did hero's x and y property collide with enemy?
+            // console.log("player:", this.x, this.y)
+            if (this.y === enemy.y && (enemy.x < this.x + this.step && enemy.x > this.x)) {
+                this.reset();
             }
+            // console.log(this.y, enemy.y)
         }
         // Check for victory
         // Did hero's  x and y coords match the final tile?
-        // render() 
+        if (this.y < -20) {
+            // console.log("x on win", this.y)
+            console.log('WIN!');
+            this.victory = true;
+        }
+    }
+
+    // render() 
     render() {
             // Draw hero sprite on current x and y coord position
             ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+            // ctx.font = '24px arial'; // Style level and score font
+            // ctx.strokeStyle = '#4caf50'; //Style level color
+            // ctx.strokeText('Level: ' + this.level, 200, 30); // Draw level
+            // ctx.fillText('Score: ' + this.score, 350, 30); // Draw score
         }
         // a handleInput() for handling keyboard input
         /**Update hero's x and y property according to event listeners
@@ -112,7 +122,12 @@ class Hero {
             }
         }
         // Resetting Hero
+    reset() {
         // Set x and y postion to starting x and y coord position
+        this.y = this.startY;
+        this.x = this.startX;
+        this.render()
+    }
 }
 
 // Now instantiate your objects.

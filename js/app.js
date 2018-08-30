@@ -1,3 +1,4 @@
+'use strict'
 // Enemies our player must avoid
 var Enemy = function(row) {
     // Variables applied to each of our instances go here,
@@ -68,7 +69,7 @@ class Hero {
             // console.log(enemy);
             // Did hero's x and y property collide with enemy?
             // console.log("player:", this.x, this.y)
-            if (this.y === enemy.y && (enemy.x < this.x + this.step && enemy.x > this.x)) {
+            if (this.y === enemy.y && (enemy.x + enemy.step / 2 > this.x && enemy.x < this.x + this.step / 2)) {
                 this.reset();
             }
             // console.log(this.y, enemy.y)
